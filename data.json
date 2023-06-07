@@ -92,7 +92,7 @@
             "id" : 0,
             "firstName" : "Florence",
             "lastName" : "Lafaye",
-            "dateBirth" : {"day": 21, "month": 08, "year": 2005},
+            "dateBirth" : {"day": 21, "month": 8, "year": 2005},
             "reportCard" :
             [
                 {
@@ -135,6 +135,6 @@
                     "comment" : "Eleve brillant"
                 }
             ]
-        },
+        }
     ]
 }
