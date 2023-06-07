@@ -10,11 +10,6 @@ class Student
     private string[] _reportCard = new string[3];
     private int _averageAllCourses;
 
-    // PROFILE GENERATING DATA
-    private string[] _firstNames = 
-    {"Églantine", "Josiane", "Aurèle", "Rémi", "Yoan", "René", "Flore", "Edmond", "Noël", "Léopold", "Théo", "Sasha", "Robin", "Zacharie", "Christèle", "Célia", "Ariel", "Emmanuel", "Martin", "Jean", "Paul", "Martine", "Lucie"};
-    private string[] _lastnames = 
-    {"Tremblay", "Dupont", "Dubois", "Boucher", "Pelletier", "Faure", "Favre", "Beaulieu", "Planche", "Gagnon", "Roussel", "Masson", "Desrosiers", "Lachance", "Cloutier", "Comtois"};
 
     // METHODES
     public Student(){}
