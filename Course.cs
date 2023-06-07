@@ -2,10 +2,17 @@ namespace project1;
 
 class Course
 {
-	private int _id;
+	private string _id;
 	private string _name;
 
-	public Course(string name){}
+	public Course(string id, string name)
+	{
+		_id = id;
+		_name = name;
+	}
 
-	~Course(){}
+	~Course()
+	{
+		Console.WriteLine("Le cours " + _name +" a bien été supprimé");
+	}
 }

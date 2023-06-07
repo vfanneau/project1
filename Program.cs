@@ -4,6 +4,9 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello, World!");
+        Console.WriteLine("Bienvenue sur le campus");
+        Console.WriteLine("TO DO : Lecture du fichier JSON");
+
+
     }
 }
