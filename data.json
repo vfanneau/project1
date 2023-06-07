@@ -1,0 +1,140 @@
+{
+    "courses" :
+    [
+        {
+            "id" : 0,
+            "nom" : "maths"
+        },
+        {
+            "id" : 1,
+            "nom" : "français"
+        },
+        {
+            "id" : 2,
+            "nom" : "histoire"
+        }
+    ],
+    "students" :
+    [
+        {
+            "id" : 0,
+            "firstName" : "Marc",
+            "lastName" : "Dupont",
+            "dateBirth" : {"day": 14, "month": 5, "year": 2005},
+            "reportCard" :
+            [
+                {
+                    "id_course" : 0,
+                    "grade" : 13,
+                    "comment" : "Pas mal, plus de serieux demandé en classe"
+                },
+                {
+                    "id_course" : 1,
+                    "grade" : 14,
+                    "comment" : "Elève appliqué et assidu"
+                },
+                {
+                    "id_course" : 2,
+                    "grade" : 8,
+                    "comment" : "Un gros retard a rattrapper avant la fin de l'année"
+                }
+            ]
+        },
+        {
+            "id" : 0,
+            "firstName" : "Lucie",
+            "lastName" : "Pelletier",
+            "dateBirth" : {"day": 3, "month": 2, "year": 2005},
+            "reportCard" :
+            [
+                {
+                    "id_course" : 0,
+                    "grade" : 10,
+                    "comment" : "N'écoute que la moitié des cours"
+                },
+                {
+                    "id_course" : 1,
+                    "grade" : 18,
+                    "comment" : "Excellent, continuez comme ça"
+                },
+                {
+                    "id_course" : 2,
+                    "grade" : 11,
+                    "comment" : "Peut mieux faire, manque de sérieux"
+                }
+            ]
+        },
+        {
+            "id" : 0,
+            "firstName" : "Alphonse",
+            "lastName" : "Meunier",
+            "dateBirth" : {"day": 25, "month": 11, "year": 2004},
+            "reportCard" :
+            [
+                {
+                    "id_course" : 0,
+                    "grade" : 16,
+                    "comment" : "Elève sérieux, continuer les efforts"
+                },
+                {
+                    "id_course" : 1,
+                    "grade" : 13,
+                    "comment" : "Manque d'implication ce trimestre"
+                },
+                {
+                    "id_course" : 2,
+                    "grade" : 15,
+                    "comment" : "Bons résultats, mais peut encore s'améliorer"
+                }
+            ]
+        },
+        {
+            "id" : 0,
+            "firstName" : "Florence",
+            "lastName" : "Lafaye",
+            "dateBirth" : {"day": 21, "month": 08, "year": 2005},
+            "reportCard" :
+            [
+                {
+                    "id_course" : 0,
+                    "grade" : 10,
+                    "comment" : "Fait juste les efforts nécessaires pour avoir la moyenne"
+                },
+                {
+                    "id_course" : 1,
+                    "grade" : 10,
+                    "comment" : "Fait juste les efforts nécessaires pour avoir la moyenne"
+                },
+                {
+                    "id_course" : 2,
+                    "grade" : 10,
+                    "comment" : "Fait juste les efforts nécessaires pour avoir la moyenne"
+                }
+            ]
+        },
+        {
+            "id" : 0,
+            "firstName" : "Léo",
+            "lastName" : "Favre",
+            "dateBirth" : {"day": 7, "month": 1, "year": 2006},
+            "reportCard" :
+            [
+                {
+                    "id_course" : 0,
+                    "grade" : 0,
+                    "comment" : "N'était pas présent au contrôle"
+                },
+                {
+                    "id_course" : 1,
+                    "grade" : 12,
+                    "comment" : "Elève encore dissipé, il est temps de se concentrer"
+                },
+                {
+                    "id_course" : 2,
+                    "grade" : 19,
+                    "comment" : "Eleve brillant"
+                }
+            ]
+        },
+    ]
+}
