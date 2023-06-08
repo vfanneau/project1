@@ -12,25 +12,16 @@
             "id" : 0,
             "firstName" : "Marc",
             "lastName" : "Dupont",
-            "dateBirth" : {"day": "14", "month": "05", "year": "2005"},
-            "reportCard" :
-            [
-                {
-                    "id_course" : 0,
-                    "grade" : 13,
-                    "comment" : "Pas mal, plus de serieux demandé en classe"
-                },
-                {
-                    "id_course" : 1,
-                    "grade" : 14,
-                    "comment" : "Elève appliqué et assidu"
-                },
-                {
-                    "id_course" : 2,
-                    "grade" : 8,
-                    "comment" : "Un gros retard a rattrapper avant la fin de l'année"
-                }
-            ]
+            "dateBirth" : {"day": "14", "month": "05", "year": "2005"}
+        }
+    ],
+    "grades" :
+    [
+        {
+            "idCourse" : 0,
+            "idStudent" : 0,
+            "grade" : 13,
+            "comment" : "De bons efforts de participation"
         }
     ]
 }
