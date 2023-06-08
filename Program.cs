@@ -180,31 +180,48 @@ class Program
         {
             Console.Write("Jour : ");
             inputBirthDay = Console.ReadLine();
-            int birthDay = Int32.Parse(inputBirthDay);
-            if(inputBirthDay == "" || birthDay < 1 || birthDay > 31)
+            int birthDay;
+            if(Int32.TryParse(inputBirthDay, out birthDay))
+            {
+                if(inputBirthDay == "" || birthDay < 1 || birthDay > 31)
+                {
+                    Console.WriteLine("Erreur : Saisie non reconnue");
+                    inputBirthDay = "0";
+                }
+                else if(birthDay < 10)
+                {
+                    inputBirthDay = "0" + inputBirthDay;
+                }
+            }
+            else
             {
                 Console.WriteLine("Erreur : Saisie non reconnue");
-                inputBirthDay = "0";
-            }
-            else if(birthDay < 10)
-            {
-                inputBirthDay = "0" + inputBirthDay;
+                    inputBirthDay = "0";
             }
         }
 
         while(inputBirthMonth == "0")
         {
             Console.Write("Mois : ");
+            int birthMonth;
             inputBirthMonth = Console.ReadLine();
-            int birthMonth = Int32.Parse(inputBirthMonth);
-            if(inputBirthMonth == "" || birthMonth < 1 || birthMonth > 12)
+            if(Int32.TryParse(inputBirthMonth, out birthMonth))
+            {
+                if(inputBirthMonth == "" || birthMonth < 1 || birthMonth > 12)
+                {
+                    Console.WriteLine("Erreur : Saisie non reconnue");
+                    inputBirthMonth = "0";
+                }
+                else if(birthMonth < 10)
+                {
+                    inputBirthMonth = "0" + inputBirthMonth;
+                }
+
+            }
+            else
             {
                 Console.WriteLine("Erreur : Saisie non reconnue");
                 inputBirthMonth = "0";
-            }
-            else if(birthMonth < 10)
-            {
-                inputBirthMonth = "0" + inputBirthMonth;
             }
         }
 
@@ -212,11 +229,15 @@ class Program
         {
             Console.Write("Annee : ");
             inputBirthYear = Console.ReadLine();
-            int birthYear = Int32.Parse(inputBirthYear);
-            if(inputBirthYear == "" || birthYear < 1900 || birthYear > 2022)
+            int birthYear;
+            if(Int32.TryParse(inputBirthYear, out birthYear))
             {
-                Console.WriteLine("Erreur : Saisie non reconnue");
-                inputBirthYear = "0";
+                if(inputBirthYear == "" || birthYear < 1900 || birthYear > 2022)
+                {
+                    Console.WriteLine("Erreur : Saisie non reconnue");
+                    inputBirthYear = "0";
+                }
+
             }
         }
 
