@@ -7,6 +7,9 @@ class Program
         string input;
         Student[] allStudents = new Student[0];
         string navigation = "main";
+        string[] logJournal = new string[0];
+        var logFile = File.CreateText("log_file.txt");    // ERASE HISTORY
+        logFile.Close();
         
         Console.WriteLine("Bienvenue sur le campus");
         Console.WriteLine("Version off-line, no initial data, no data storage");
@@ -62,6 +65,14 @@ class Program
 
             Console.WriteLine("");
         }
+    }
+
+
+    static void Log(string message)
+    {
+        string timestamp = DateTime.Now.ToString();
+        string[] newLine = new string[1] {timestamp + " -- " + message};
+        File.AppendAllLines("log_file.txt", newLine);
     }
 
             // MENU NAVIGATION FUNCTIONS
@@ -129,10 +140,11 @@ class Program
         }
     }
 
-            // DISPLAY FUNCTIONS
+            // STUDENT FUNCTIONS
 
     static void DisplayStudents(Student[] allStudents)
     {
+        Log("Consultation de la liste des etudiants");
         if(allStudents.Length != 0)
         {
             foreach(Student student in allStudents)
@@ -248,6 +260,7 @@ class Program
 
     static Student[] AddStudent(int id, string[] studentInfo, Student[] allStudentsOld)
     {
+        Log("Ajout d'un nouvel etudiant #" + id + " " + studentInfo[0] + " " + studentInfo[1]);
         Student newGuy = new Student(id, studentInfo[0], studentInfo[1], studentInfo[2]);
         Student[] allStudentsNew = new Student[id + 1];
         allStudentsOld.CopyTo(allStudentsNew, 0);
