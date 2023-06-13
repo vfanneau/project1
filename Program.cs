@@ -5,8 +5,9 @@ class Program
     static void Main(string[] args)
     {
         string input;
-        Student[] allStudents = new Student[0];
-        Course[] allCourses = new Course[0];
+        List<Student> allStudents = new List<Student>();
+        List<Course> allCourses = new List<Course>();
+        List<Grade> allGrades = new List<Grade>();
         string navigation = "main";
         string[] logJournal = new string[0];
         var logFile = File.CreateText("log_file.txt");    // CLEAR HISTORY
@@ -52,12 +53,17 @@ class Program
                     Console.WriteLine("LISTE DES ETUDIANTS");
                     Log("Consultation de la liste des etudiants");
                     
-                    if(allStudents.Length != 0)
+                    if(allStudents.Count != 0)
                     {
                         foreach(Student student in allStudents)
                         {
                             student.Display();
                         }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Liste vide");
+                        Console.WriteLine("");
                     }
 
                     navigation = "students";
@@ -66,10 +72,18 @@ class Program
                 case "students_add":
                     Console.WriteLine("AJOUTER UN ETUDIANT");
                     string[] studentInfo = new string[4];
-                    int id = allStudents.Length;
-                    studentInfo = PromptStudentInfo(id);
-                    Log("Ajout d'un nouvel etudiant #" + id + " " + studentInfo[0] + " " + studentInfo[1]);
-                    allStudents = AddStudent(id, studentInfo, allStudents);
+                    int idStudent;
+                    if(allStudents.Count == 0)
+                    {
+                        idStudent = 0;
+                    }
+                    else
+                    {
+                        idStudent = allStudents[allStudents.Count-1].id + 1;    // LAST ID + 1
+                    }
+                    studentInfo = PromptStudentInfo(idStudent);
+                    Log("Ajout d'un nouvel etudiant #" + idStudent + " " + studentInfo[0] + " " + studentInfo[1]);
+                    allStudents = AddStudent(idStudent, studentInfo, allStudents);
                     navigation = "students";
                     break;
 
@@ -77,12 +91,17 @@ class Program
                     Console.WriteLine("LISTE DES COURS");
                     Log("Consultation de la liste des cours");
                     
-                    if(allCourses.Length != 0)
+                    if(allCourses.Count != 0)
                     {
                         foreach(Course course in allCourses)
                         {
                             course.Display();
                         }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Liste vide");
+                        Console.WriteLine("");
                     }
 
                     navigation = "courses";
@@ -90,10 +109,18 @@ class Program
 
                 case "courses_add":
                     Console.WriteLine("AJOUTER UN COURS");
-                    id = allCourses.Length;
-                    string name = PromptCourseInfo(id);
-                    Log("Ajout d'un nouvel cours #" + id + " " + name);
-                    allCourses = AddCourse(id, name, allCourses);
+                    int idNewCourse;
+                    if(allCourses.Count == 0)
+                    {
+                        idNewCourse = 0;
+                    }
+                    else
+                    {
+                        idNewCourse = allCourses[allCourses.Count-1].id + 1;    // LAST ID + 1
+                    }
+                    string name = PromptCourseInfo(idNewCourse);
+                    Log("Ajout d'un nouveau cours #" + idNewCourse + " " + name);
+                    allCourses = AddCourse(idNewCourse, name, allCourses);
                     navigation = "courses";
                     break;
             }
@@ -294,22 +321,18 @@ class Program
         return inputName;
     }
 
-    static Student[] AddStudent(int id, string[] studentInfo, Student[] allStudentsOld)
+    static List<Student> AddStudent(int id, string[] studentInfo, List<Student> allStudents)
     {
         Student newGuy = new Student(id, studentInfo[0], studentInfo[1], studentInfo[2]);
-        Student[] allStudentsNew = new Student[id + 1];
-        allStudentsOld.CopyTo(allStudentsNew, 0);
-        allStudentsNew[id] = newGuy;
-        return allStudentsNew;
+        allStudents.Add(newGuy);
+        return allStudents;
     }
 
-    static Course[] AddCourse(int id, string name, Course[] allCoursesOld)
+    static List<Course> AddCourse(int id, string name, List<Course> allCourses)
     {
         Course newGuy = new Course(id, name);
-        Course[] allCoursesNew = new Course[id + 1];
-        allCoursesOld.CopyTo(allCoursesNew, 0);
-        allCoursesNew[id] = newGuy;
-        return allCoursesNew;
+        allCourses.Add(newGuy);
+        return allCourses;
     }
 
 }

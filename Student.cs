@@ -3,26 +3,26 @@ namespace project1;
 class Student
 {
     // ATTRIBUTS ELEVES
-    private int _id;
-    private string _firstName;
-    private string _lastName;
-    private string _dateBirth;
+    public int id {get; set;}
+    public string firstName {get; set;}
+    public string lastName {get; set;}
+    public string dateBirth {get; set;}
 
 
     // METHODES
     public Student(int id, string firstName, string lastName, string dateBirth)
     {
-        _id = id;
-        _firstName = firstName;
-        _lastName = lastName;
-        _dateBirth = dateBirth;
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateBirth = dateBirth;
     }
 
     public void Display()
     {
-        Console.WriteLine("Identifiant : " + _id);
-        Console.WriteLine("Prénom : " + _firstName);
-        Console.WriteLine("Nom : " + _lastName);
+        Console.WriteLine("Identifiant : " + id);
+        Console.WriteLine("Prénom : " + firstName);
+        Console.WriteLine("Nom : " + lastName);
         Console.WriteLine("");
     }
 }
