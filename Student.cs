@@ -18,20 +18,11 @@ class Student
         _dateBirth = dateBirth;
     }
 
-    public string [] PassStudentInfo()
+    public void Display()
     {
-        string[] studentInfo = new string[2];
-        
-        studentInfo = new string[4]
-        {
-            _id.ToString(),
-            _firstName,
-            _lastName,
-            _dateBirth
-        };
-
-        return studentInfo;
+        Console.WriteLine("Identifiant : " + _id);
+        Console.WriteLine("Prénom : " + _firstName);
+        Console.WriteLine("Nom : " + _lastName);
+        Console.WriteLine("");
     }
-
-    
 }

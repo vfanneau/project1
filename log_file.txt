@@ -1,2 +1,5 @@
-09/06/2023 11:50:06 -- Ajout d'un nouvel etudiant #0 victor youhou
-09/06/2023 11:50:09 -- Consultation de la liste des etudiants
+13/06/2023 12:55:42 -- Ajout d'un nouvel cours #0 maths
+13/06/2023 12:55:44 -- Consultation de la liste des cours
+13/06/2023 12:55:53 -- Ajout d'un nouvel cours #1 francais
+13/06/2023 12:55:58 -- Ajout d'un nouvel cours #2 histoire
+13/06/2023 12:56:00 -- Consultation de la liste des cours

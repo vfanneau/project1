@@ -2,13 +2,20 @@ namespace project1;
 
 class Course
 {
-	private string _id;
+	private int _id;
 	private string _name;
 
-	public Course(string id, string name)
+	public Course(int id, string name)
 	{
 		_id = id;
 		_name = name;
+	}
+
+	public void Display()
+	{
+        Console.WriteLine("Identifiant : " + _id);
+        Console.WriteLine("Matiere : " + _name);
+        Console.WriteLine("");
 	}
 
 	~Course()

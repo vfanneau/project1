@@ -6,9 +6,10 @@ class Program
     {
         string input;
         Student[] allStudents = new Student[0];
+        Course[] allCourses = new Course[0];
         string navigation = "main";
         string[] logJournal = new string[0];
-        var logFile = File.CreateText("log_file.txt");    // ERASE HISTORY
+        var logFile = File.CreateText("log_file.txt");    // CLEAR HISTORY
         logFile.Close();
         
         Console.WriteLine("Bienvenue sur le campus");
@@ -49,17 +50,51 @@ class Program
 
                 case "students_list":
                     Console.WriteLine("LISTE DES ETUDIANTS");
-                    DisplayStudents(allStudents);
+                    Log("Consultation de la liste des etudiants");
+                    
+                    if(allStudents.Length != 0)
+                    {
+                        foreach(Student student in allStudents)
+                        {
+                            student.Display();
+                        }
+                    }
+
                     navigation = "students";
                     break;
 
                 case "students_add":
+                    Console.WriteLine("AJOUTER UN ETUDIANT");
                     string[] studentInfo = new string[4];
                     int id = allStudents.Length;
-                    Console.WriteLine("AJOUTER UN ETUDIANT");
                     studentInfo = PromptStudentInfo(id);
+                    Log("Ajout d'un nouvel etudiant #" + id + " " + studentInfo[0] + " " + studentInfo[1]);
                     allStudents = AddStudent(id, studentInfo, allStudents);
                     navigation = "students";
+                    break;
+
+                case "courses_list":
+                    Console.WriteLine("LISTE DES COURS");
+                    Log("Consultation de la liste des cours");
+                    
+                    if(allCourses.Length != 0)
+                    {
+                        foreach(Course course in allCourses)
+                        {
+                            course.Display();
+                        }
+                    }
+
+                    navigation = "courses";
+                    break;
+
+                case "courses_add":
+                    Console.WriteLine("AJOUTER UN COURS");
+                    id = allCourses.Length;
+                    string name = PromptCourseInfo(id);
+                    Log("Ajout d'un nouvel cours #" + id + " " + name);
+                    allCourses = AddCourse(id, name, allCourses);
+                    navigation = "courses";
                     break;
             }
 
@@ -141,22 +176,6 @@ class Program
     }
 
             // STUDENT FUNCTIONS
-
-    static void DisplayStudents(Student[] allStudents)
-    {
-        Log("Consultation de la liste des etudiants");
-        if(allStudents.Length != 0)
-        {
-            foreach(Student student in allStudents)
-            {
-                string[] studentInfo = student.PassStudentInfo();
-                Console.WriteLine("Identifiant : " + studentInfo[0]);
-                Console.WriteLine("Prénom : " + studentInfo[1]);
-                Console.WriteLine("Nom : " + studentInfo[2]);
-                Console.WriteLine("");
-            }
-        }
-    }
 
     static string[] PromptStudentInfo(int id)
     {
@@ -258,14 +277,39 @@ class Program
         return studentInfo;
     }
 
+    static string PromptCourseInfo(int id)
+    {
+        string inputName = "";
+
+        while(inputName == "")
+        {
+            Console.Write("Intitule de la matiere : ");
+            inputName = Console.ReadLine();
+            if(inputName == "")
+            {
+                Console.WriteLine("Erreur : Saisie non reconnue");
+            }
+        }
+
+        return inputName;
+    }
+
     static Student[] AddStudent(int id, string[] studentInfo, Student[] allStudentsOld)
     {
-        Log("Ajout d'un nouvel etudiant #" + id + " " + studentInfo[0] + " " + studentInfo[1]);
         Student newGuy = new Student(id, studentInfo[0], studentInfo[1], studentInfo[2]);
         Student[] allStudentsNew = new Student[id + 1];
         allStudentsOld.CopyTo(allStudentsNew, 0);
         allStudentsNew[id] = newGuy;
         return allStudentsNew;
+    }
+
+    static Course[] AddCourse(int id, string name, Course[] allCoursesOld)
+    {
+        Course newGuy = new Course(id, name);
+        Course[] allCoursesNew = new Course[id + 1];
+        allCoursesOld.CopyTo(allCoursesNew, 0);
+        allCoursesNew[id] = newGuy;
+        return allCoursesNew;
     }
 
 }
