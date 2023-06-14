@@ -1,9 +1,8 @@
 namespace project1;
 
-class Student
+class Student : DataPrototype
 {
     // ATTRIBUTS ELEVES
-    public int id {get; set;}
     public string firstName {get; set;}
     public string lastName {get; set;}
     public string dateBirth {get; set;}

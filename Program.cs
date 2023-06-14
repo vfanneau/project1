@@ -87,6 +87,31 @@ class Program
                     navigation = "students";
                     break;
 
+                case "students_studentInfo":
+                    Console.WriteLine("CONSULTER LE DOSSIER D'UN ELEVE");
+                    Console.Write("Identifiant de l'étudiant a examiner : ");
+                    input = Console.ReadLine();
+                    if(Int32.TryParse(input, out idStudent))
+                    {
+                        int index = GetIndexFromId(allStudents, idStudent);
+                        if(index != -1)
+                        {
+                            Student student = allStudents[index];
+                            student.Display();
+                            Log("Consultation du profil étudiant #" + idStudent);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Erreur : Identifiant inexistant dans la base de donnees # " + input);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Erreur : Ceci n'est pas un nombre entier" + idStudent);
+                    }
+                    navigation = "students";
+                    break;
+
                 case "courses_list":
                     Console.WriteLine("LISTE DES COURS");
                     Log("Consultation de la liste des cours");
@@ -135,6 +160,19 @@ class Program
         string timestamp = DateTime.Now.ToString();
         string[] newLine = new string[1] {timestamp + " -- " + message};
         File.AppendAllLines("log_file.txt", newLine);
+    }
+
+    static int GetIndexFromId(IEnumerable<DataPrototype> list, int idGoal)
+    {
+        int i = 0;
+        foreach(DataPrototype item in list)
+        {
+            if(item.id == idGoal)
+            {return i;}
+            else
+            {i++;}
+        }
+        return -1;
     }
 
             // MENU NAVIGATION FUNCTIONS
@@ -304,6 +342,15 @@ class Program
         return studentInfo;
     }
 
+    static List<Student> AddStudent(int id, string[] studentInfo, List<Student> allStudents)
+    {
+        Student newGuy = new Student(id, studentInfo[0], studentInfo[1], studentInfo[2]);
+        allStudents.Add(newGuy);
+        return allStudents;
+    }
+
+            // STUDENT FUNCTIONS
+
     static string PromptCourseInfo(int id)
     {
         string inputName = "";
@@ -319,13 +366,6 @@ class Program
         }
 
         return inputName;
-    }
-
-    static List<Student> AddStudent(int id, string[] studentInfo, List<Student> allStudents)
-    {
-        Student newGuy = new Student(id, studentInfo[0], studentInfo[1], studentInfo[2]);
-        allStudents.Add(newGuy);
-        return allStudents;
     }
 
     static List<Course> AddCourse(int id, string name, List<Course> allCourses)

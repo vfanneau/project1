@@ -1,8 +1,7 @@
 namespace project1;
 
-class Course
+class Course : DataPrototype
 {
-	public int id {get; set;}
 	public string name {get; set;}
 
 	public Course(int id, string name)
