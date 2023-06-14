@@ -5,6 +5,8 @@ class Program
     static void Main(string[] args)
     {
         string input;
+        Student student;
+        Course course;
         List<Student> allStudents = new List<Student>();
         List<Course> allCourses = new List<Course>();
         List<Grade> allGrades = new List<Grade>();
@@ -20,6 +22,7 @@ class Program
         {
             switch(navigation)
             {
+            // MENU PRINCIPAL
                 case "main":
                     Console.WriteLine("MENU PRINCIPAL");
                     Console.WriteLine("1 --> Eleves");
@@ -28,6 +31,7 @@ class Program
                     navigation = MenuMain(input);
                     break;
 
+            // MENU ELEVES
                 case "students":
                     Console.WriteLine("MENU ELEVES");
                     Console.WriteLine("1 --> Liste des eleves");
@@ -39,6 +43,7 @@ class Program
                     navigation = MenuStudents(input);
                     break;
 
+            // MENU COURS
                 case "courses":
                     Console.WriteLine("MENU COURS");
                     Console.WriteLine("1 --> Liste des cours");
@@ -49,15 +54,16 @@ class Program
                     navigation = MenuCourses(input);
                     break;
 
+            // LISTE DES ETUDIANTS
                 case "students_list":
                     Console.WriteLine("LISTE DES ETUDIANTS");
                     Log("Consultation de la liste des etudiants");
                     
                     if(allStudents.Count != 0)
                     {
-                        foreach(Student student in allStudents)
+                        foreach(Student one in allStudents)
                         {
-                            student.Display();
+                            one.Display();
                         }
                     }
                     else
@@ -69,6 +75,7 @@ class Program
                     navigation = "students";
                     break;
 
+            // AJOUTER UN ETUDIANT
                 case "students_add":
                     Console.WriteLine("AJOUTER UN ETUDIANT");
                     string[] studentInfo = new string[4];
@@ -81,12 +88,13 @@ class Program
                     {
                         idStudent = allStudents[allStudents.Count-1].id + 1;    // LAST ID + 1
                     }
-                    studentInfo = PromptStudentInfo(idStudent);
+                    studentInfo = PromptStudentInfo();
                     Log("Ajout d'un nouvel etudiant #" + idStudent + " " + studentInfo[0] + " " + studentInfo[1]);
                     allStudents = AddStudent(idStudent, studentInfo, allStudents);
                     navigation = "students";
                     break;
 
+            // CONSULTER LE DOSSIER D'UN ELEVE
                 case "students_studentInfo":
                     Console.WriteLine("CONSULTER LE DOSSIER D'UN ELEVE");
                     Console.Write("Identifiant de l'étudiant a examiner : ");
@@ -96,7 +104,7 @@ class Program
                         int index = GetIndexFromId(allStudents, idStudent);
                         if(index != -1)
                         {
-                            Student student = allStudents[index];
+                            student = allStudents[index];
                             student.Display();
                             Log("Consultation du profil étudiant #" + idStudent);
                         }
@@ -107,20 +115,42 @@ class Program
                     }
                     else
                     {
-                        Console.WriteLine("Erreur : Ceci n'est pas un nombre entier" + idStudent);
+                        Console.WriteLine("Erreur : Saisie non reconnue");
                     }
                     navigation = "students";
                     break;
 
+            // AJOUTER UNE NOTE A UN ETUDIANT
+                case "students_grade":
+                    Console.WriteLine("AJOUTER UNE NOTE A ETUDIANT");
+                    string[] gradeInfo = new string[4];
+                    int idGrade;
+                    if(allGrades.Count == 0)
+                    {
+                        idGrade = 0;
+                    }
+                    else
+                    {
+                        idGrade = allGrades[allGrades.Count-1].id + 1;    // LAST ID + 1
+                    }
+                    gradeInfo = PromptGradeInfo(allStudents, allCourses);
+                    student = allStudents[GetIndexFromId(allStudents, Int32.Parse(gradeInfo[0]))];
+                    course = allCourses[GetIndexFromId(allCourses, Int32.Parse(gradeInfo[1]))];
+                    Log("Ajout d'une nouvelle note pour l'etudiant " + student.firstName + " " + student.lastName + " en " + course.name + " : " + gradeInfo[2] + "/20 ; " + gradeInfo[3]);
+                    allGrades = AddGrade(idGrade, gradeInfo, allGrades, allStudents, allCourses);
+                    navigation = "students";
+                    break;
+
+            // LISTE DES COURS
                 case "courses_list":
                     Console.WriteLine("LISTE DES COURS");
                     Log("Consultation de la liste des cours");
                     
                     if(allCourses.Count != 0)
                     {
-                        foreach(Course course in allCourses)
+                        foreach(Course one in allCourses)
                         {
-                            course.Display();
+                            one.Display();
                         }
                     }
                     else
@@ -132,6 +162,7 @@ class Program
                     navigation = "courses";
                     break;
 
+            // AJOUTER UN COURS
                 case "courses_add":
                     Console.WriteLine("AJOUTER UN COURS");
                     int idNewCourse;
@@ -143,7 +174,7 @@ class Program
                     {
                         idNewCourse = allCourses[allCourses.Count-1].id + 1;    // LAST ID + 1
                     }
-                    string name = PromptCourseInfo(idNewCourse);
+                    string name = PromptCourseInfo();
                     Log("Ajout d'un nouveau cours #" + idNewCourse + " " + name);
                     allCourses = AddCourse(idNewCourse, name, allCourses);
                     navigation = "courses";
@@ -242,7 +273,7 @@ class Program
 
             // STUDENT FUNCTIONS
 
-    static string[] PromptStudentInfo(int id)
+    static string[] PromptStudentInfo()
     {
         string inputFirstName = "";
         string inputLastName = "";
@@ -351,7 +382,7 @@ class Program
 
             // STUDENT FUNCTIONS
 
-    static string PromptCourseInfo(int id)
+    static string PromptCourseInfo()
     {
         string inputName = "";
 
@@ -373,6 +404,96 @@ class Program
         Course newGuy = new Course(id, name);
         allCourses.Add(newGuy);
         return allCourses;
+    }
+
+            // GRADE FUNCTIONS
+    
+    static string[] PromptGradeInfo(List<Student> allStudents, List<Course> allCourses)
+    {
+        string inputIdStudent = "";
+        string inputIdCourse = "";
+        string inputGradeValue = "";
+        string inputGradeComment = "";
+
+        while(inputIdStudent == "")
+        {
+            Console.Write("Identifiant de l'etudiant a noter : ");
+            inputIdStudent = Console.ReadLine();
+            int inputIdStudentInt;
+            if(Int32.TryParse(inputIdStudent, out inputIdStudentInt))
+            {
+                int index = GetIndexFromId(allStudents, inputIdStudentInt);
+                if(index == -1)
+                {
+                    Console.WriteLine("Erreur : Identifiant inexistant dans la base de donnees # " + inputIdStudent);
+                    inputIdStudent = "";
+                }
+            }
+            else
+            {
+                    Console.WriteLine("Erreur : Saisie non reconnue");
+
+            }
+        }
+
+        while(inputIdCourse == "")
+        {
+            Console.Write("Identifiant de l'etudiant a noter : ");
+            inputIdCourse = Console.ReadLine();
+            int inputIdCourseInt;
+            if(Int32.TryParse(inputIdCourse, out inputIdCourseInt))
+            {
+                int index = GetIndexFromId(allCourses, inputIdCourseInt);
+                if(index == -1)
+                {
+                    Console.WriteLine("Erreur : Identifiant inexistant dans la base de donnees # " + inputIdCourse);
+                    inputIdCourse = "";
+                }
+            }
+            else
+            {
+                    Console.WriteLine("Erreur : Saisie non reconnue");
+
+            }
+        }
+
+        while(inputGradeValue == "")
+        {
+            Console.Write("Note sur 20 : ");
+            inputGradeValue = Console.ReadLine();
+            int gradeValue;
+            if(Int32.TryParse(inputGradeValue, out gradeValue))
+            {
+                if(inputGradeValue == "" || gradeValue < 0 || gradeValue > 20)
+                {
+                    Console.WriteLine("Erreur : Saisie non reconnue");
+                    inputGradeValue = "";
+                }
+                else if(gradeValue < 10)
+                {
+                    inputGradeValue = "0" + gradeValue.ToString();
+                }
+            }
+            else
+            {
+                Console.WriteLine("Erreur : Saisie non reconnue");
+                    inputGradeValue = "";
+            }
+        }
+
+        Console.Write("Appreciation (peut etre vide) : ");
+        inputGradeComment = Console.ReadLine();
+
+        return new string[] {inputIdStudent, inputIdCourse, inputGradeValue, inputGradeComment};
+    }
+
+    static List<Grade> AddGrade(int id, string[] gradeInfo, List<Grade> allGrades, List<Student> allStudents, List<Course> allCourses)
+    {
+        Student student = allStudents[GetIndexFromId(allStudents, Int32.Parse(gradeInfo[0]))];
+        Course course = allCourses[GetIndexFromId(allCourses, Int32.Parse(gradeInfo[1]))];
+        Grade newGrade = new Grade(id, student, course, Int32.Parse(gradeInfo[2]), gradeInfo[3]);
+        allGrades.Add(newGrade);
+        return allGrades;
     }
 
 }

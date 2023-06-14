@@ -6,6 +6,7 @@ class Student : DataPrototype
     public string firstName {get; set;}
     public string lastName {get; set;}
     public string dateBirth {get; set;}
+    public List<Grade> reportCard {get; set;}
 
 
     // METHODES
@@ -15,6 +16,8 @@ class Student : DataPrototype
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateBirth = dateBirth;
+        this.reportCard = new List<Grade>();
+
     }
 
     public void Display()

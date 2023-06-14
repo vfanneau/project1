@@ -2,16 +2,16 @@ namespace project1;
 
 class Grade : DataPrototype
 {
-	public int idStudent {get; set;}
-	public int idCourse {get; set;}
+	public Student student {get; set;}
+	public Course course {get; set;}
 	public int grade {get; set;}
 	public string comment {get; set;}
 
-	public Grade(int id, int idStudent, int idCourse, int grade, string comment)
+	public Grade(int id, Student student, Course course, int grade, string comment)
 	{
 		this.id = id;
-		this.idStudent = idStudent;
-		this.idCourse = idCourse;
+		this.student = student;
+		this.course = course;
 		this.grade = grade;
 		this.comment = comment;
 	}
