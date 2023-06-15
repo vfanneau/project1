@@ -10,7 +10,7 @@ class Course : DataPrototype
 		this.name = name;
 	}
 
-	public void Display()
+	public override void Display()
 	{
         Console.WriteLine("Identifiant : " + id);
         Console.WriteLine("Matiere : " + name);

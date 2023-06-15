@@ -16,7 +16,7 @@ class Grade : DataPrototype
 		this.comment = comment;
 	}
 
-	public void Display()
+	public override void Display()
     {
         Console.WriteLine("");
         Console.WriteLine("Note : " + grade);

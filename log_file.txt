@@ -1,4 +1,0 @@
-15/06/2023 16:20:01 -- Ajout d'un nouvel etudiant #0 toto lemoine
-15/06/2023 16:20:52 -- Ajout d'un nouveau cours #0 maths
-15/06/2023 16:21:15 -- Ajout d'une nouvelle note pour l'etudiant toto lemoine en maths : 20/20 ; parfait
-15/06/2023 16:21:26 -- Consultation du profil étudiant #0

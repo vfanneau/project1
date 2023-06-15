@@ -20,7 +20,7 @@ class Student : DataPrototype
 
     }
 
-    public void Display()
+    public override void Display()
     {
         Console.WriteLine("Identifiant : " + id);
         Console.WriteLine("Prénom : " + firstName);
