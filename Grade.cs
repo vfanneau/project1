@@ -16,4 +16,11 @@ class Grade : DataPrototype
 		this.comment = comment;
 	}
 
+	public void Display()
+    {
+        Console.WriteLine("");
+        Console.WriteLine("Note : " + grade);
+        Console.WriteLine("Appreciation : " + comment);
+    }
+
 }

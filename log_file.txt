@@ -1,9 +1,4 @@
-14/06/2023 17:42:09 -- Ajout d'un nouvel etudiant #0 tom dupont
-14/06/2023 17:42:33 -- Ajout d'un nouvel etudiant #1 nana dupont
-14/06/2023 17:42:50 -- Ajout d'un nouveau cours #0 maths
-14/06/2023 17:42:55 -- Ajout d'un nouveau cours #1 francais
-14/06/2023 17:42:57 -- Consultation de la liste des cours
-14/06/2023 17:43:09 -- Consultation de la liste des etudiants
-14/06/2023 17:45:45 -- Ajout d'une nouvelle note pour l'etudiant tom dupont en maths : 12/20 ; pas mal
-14/06/2023 17:46:22 -- Ajout d'une nouvelle note pour l'etudiant tom dupont en francais : 04/20 ; un vrai cancre
-14/06/2023 17:46:28 -- Consultation du profil étudiant #0
+15/06/2023 16:20:01 -- Ajout d'un nouvel etudiant #0 toto lemoine
+15/06/2023 16:20:52 -- Ajout d'un nouveau cours #0 maths
+15/06/2023 16:21:15 -- Ajout d'une nouvelle note pour l'etudiant toto lemoine en maths : 20/20 ; parfait
+15/06/2023 16:21:26 -- Consultation du profil étudiant #0

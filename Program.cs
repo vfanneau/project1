@@ -107,6 +107,10 @@ class Program
                             student = allStudents[index];
                             student.Display();
                             Log("Consultation du profil étudiant #" + idStudent);
+                            foreach(Grade grade in student.reportCard)
+                            {
+                                grade.Display();
+                            }
                         }
                         else
                         {
@@ -492,6 +496,7 @@ class Program
         Student student = allStudents[GetIndexFromId(allStudents, Int32.Parse(gradeInfo[0]))];
         Course course = allCourses[GetIndexFromId(allCourses, Int32.Parse(gradeInfo[1]))];
         Grade newGrade = new Grade(id, student, course, Int32.Parse(gradeInfo[2]), gradeInfo[3]);
+        student.reportCard.Add(newGrade);
         allGrades.Add(newGrade);
         return allGrades;
     }
