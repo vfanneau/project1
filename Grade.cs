@@ -19,6 +19,7 @@ class Grade : DataPrototype
 	public override void Display()
     {
         Console.WriteLine("");
+        Console.WriteLine("Matiere : " + course.name);
         Console.WriteLine("Note : " + grade);
         Console.WriteLine("Appreciation : " + comment);
     }

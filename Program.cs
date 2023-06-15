@@ -4,6 +4,7 @@ class Program
 {
     static void Main(string[] args)
     {
+        Console.Clear();
         string input;
         Student student;
         Course course;
@@ -107,10 +108,6 @@ class Program
                             student = allStudents[index];
                             student.Display();
                             Log("Consultation du profil étudiant #" + idStudent);
-                            foreach(Grade grade in student.reportCard)
-                            {
-                                grade.Display();
-                            }
                         }
                         else
                         {
@@ -185,7 +182,7 @@ class Program
                     break;
             }
 
-            Console.WriteLine("");
+            Console.Clear();
         }
     }
 
@@ -442,7 +439,7 @@ class Program
 
         while(inputIdCourse == "")
         {
-            Console.Write("Identifiant de l'etudiant a noter : ");
+            Console.Write("Identifiant de la matiere : ");
             inputIdCourse = Console.ReadLine();
             int inputIdCourseInt;
             if(Int32.TryParse(inputIdCourse, out inputIdCourseInt))
