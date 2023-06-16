@@ -65,6 +65,7 @@ class Program
                         foreach(Student one in allStudents)
                         {
                             one.Display();
+                            Console.WriteLine("");
                         }
                     }
                     else
@@ -72,7 +73,8 @@ class Program
                         Console.WriteLine("Liste vide");
                         Console.WriteLine("");
                     }
-
+                    Console.Write("Entree pour revenir au menu :");
+                    Console.ReadLine();
                     navigation = "students";
                     break;
 
@@ -107,6 +109,20 @@ class Program
                         {
                             student = allStudents[index];
                             student.Display();
+                            Console.WriteLine("Date de naissance : " + student.dateBirth);
+                            int sum = 0;
+                            int i = 0;
+                            foreach(Grade grade in student.reportCard)
+                            {
+                                grade.Display();
+                                sum += grade.grade;
+                                i++;
+                            }
+                            if(i > 0)
+                            {
+                                Console.WriteLine("");
+                                Console.WriteLine("Moyenne generale : " + (double)sum / i + "/20");
+                            }
                             Log("Consultation du profil étudiant #" + idStudent);
                         }
                         else
@@ -118,6 +134,8 @@ class Program
                     {
                         Console.WriteLine("Erreur : Saisie non reconnue");
                     }
+                    Console.Write("Entree pour revenir au menu :");
+                    Console.ReadLine();
                     navigation = "students";
                     break;
 
@@ -159,7 +177,8 @@ class Program
                         Console.WriteLine("Liste vide");
                         Console.WriteLine("");
                     }
-
+                    Console.Write("Entree pour revenir au menu :");
+                    Console.ReadLine();
                     navigation = "courses";
                     break;
 
@@ -324,7 +343,7 @@ class Program
             else
             {
                 Console.WriteLine("Erreur : Saisie non reconnue");
-                    inputBirthDay = "0";
+                inputBirthDay = "0";
             }
         }
 
@@ -433,7 +452,7 @@ class Program
             else
             {
                     Console.WriteLine("Erreur : Saisie non reconnue");
-
+                    inputIdStudent = "";
             }
         }
 
@@ -454,7 +473,7 @@ class Program
             else
             {
                     Console.WriteLine("Erreur : Saisie non reconnue");
-
+                    inputIdStudent = "";
             }
         }
 
@@ -478,7 +497,7 @@ class Program
             else
             {
                 Console.WriteLine("Erreur : Saisie non reconnue");
-                    inputGradeValue = "";
+                inputGradeValue = "";
             }
         }
 

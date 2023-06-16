@@ -1,4 +1,13 @@
 {
+    "students" :
+    [
+        {
+            "id" : 0,
+            "firstName" : "Toto",
+            "lastName" : "First-Student",
+            "dateBirth" : "31/02/1999"
+        }
+    ],
     "courses" :
     [
         {
@@ -6,20 +15,20 @@
             "nom" : "maths"
         }
     ],
-    "students" :
-    [
-        {
-            "id" : 0,
-            "firstName" : "Marc",
-            "lastName" : "Dupont",
-            "dateBirth" : "14/05/2005"
-        }
-    ],
     "grades" :
     [
         {
-            "idCourse" : 0,
-            "idStudent" : 0,
+            "id" : 0,
+            "student" : {
+                "id" : 0,
+                "firstName" : "Toto",
+                "lastName" : "First-Student",
+                "dateBirth" : "31/02/1999"
+            },
+            "course" : {
+                "id" : 0,
+                "nom" : "maths"
+            },
             "grade" : 13,
             "comment" : "De bons efforts de participation"
         }

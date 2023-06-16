@@ -21,7 +21,14 @@ class Grade : DataPrototype
         Console.WriteLine("");
         Console.WriteLine("Matiere : " + course.name);
         Console.WriteLine("Note : " + grade);
-        Console.WriteLine("Appreciation : " + comment);
+		if(comment == "")
+		{
+			Console.WriteLine("Pas d'appreciation pour cette note");
+		}
+		else
+		{
+			Console.WriteLine("Appreciation : " + comment);
+		}
     }
 
 }

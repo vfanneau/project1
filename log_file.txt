@@ -1,0 +1,15 @@
+16/06/2023 10:34:17 -- Ajout d'un nouveau cours #0 maths
+16/06/2023 10:34:27 -- Ajout d'un nouveau cours #1 maths
+16/06/2023 10:34:30 -- Consultation de la liste des cours
+16/06/2023 10:34:55 -- Ajout d'un nouvel etudiant #0 toto smith
+16/06/2023 10:34:58 -- Consultation de la liste des etudiants
+16/06/2023 10:35:16 -- Ajout d'un nouvel etudiant #1 jane doe
+16/06/2023 10:35:22 -- Consultation de la liste des etudiants
+16/06/2023 10:35:29 -- Consultation du profil étudiant #1
+16/06/2023 10:35:54 -- Ajout d'une nouvelle note pour l'etudiant toto smith en maths : 12/20 ; bien
+16/06/2023 10:36:00 -- Consultation du profil étudiant #0
+16/06/2023 10:36:32 -- Ajout d'une nouvelle note pour l'etudiant toto smith en maths : 19/20 ; 
+16/06/2023 10:36:37 -- Consultation du profil étudiant #0
+16/06/2023 10:37:05 -- Ajout d'une nouvelle note pour l'etudiant jane doe en maths : 15/20 ; tres bien
+16/06/2023 10:37:12 -- Consultation du profil étudiant #0
+16/06/2023 10:37:21 -- Consultation de la liste des etudiants
