@@ -5,7 +5,25 @@
             "id" : 0,
             "firstName" : "Toto",
             "lastName" : "First-Student",
-            "dateBirth" : "31/02/1999"
+            "dateBirth" : "31/02/1999",
+            "reportCard" :
+            [
+                {
+                    "id" : 0,
+                    "student" : {
+                        "id" : 0,
+                        "firstName" : "Toto",
+                        "lastName" : "First-Student",
+                        "dateBirth" : "31/02/1999"
+                    },
+                    "course" : {
+                        "id" : 0,
+                        "nom" : "maths"
+                    },
+                    "grade" : 13,
+                    "comment" : "De bons efforts de participation"
+                }
+            ]
         }
     ],
     "courses" :

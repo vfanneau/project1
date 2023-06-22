@@ -28,6 +28,8 @@ class Program
                     Console.WriteLine("MENU PRINCIPAL");
                     Console.WriteLine("1 --> Eleves");
                     Console.WriteLine("2 --> Cours");
+                    Console.WriteLine("3 --> Fermer");
+                    Log("Menu principal");
                     input = Console.ReadLine();
                     navigation = MenuMain(input);
                     break;
@@ -40,6 +42,7 @@ class Program
                     Console.WriteLine("3 --> Acceder aux informations d'un eleve");
                     Console.WriteLine("4 --> Ajouter une note a un eleve");
                     Console.WriteLine("5 --> Retour au menu principal");
+                    Log("Menu eleves");
                     input = Console.ReadLine();
                     navigation = MenuStudents(input);
                     break;
@@ -51,6 +54,7 @@ class Program
                     Console.WriteLine("2 --> Ajouter un cours au programme");
                     Console.WriteLine("3 --> Supprimer un cours du programme");
                     Console.WriteLine("4 --> Retour au menu principal");
+                    Log("Menu cours");
                     input = Console.ReadLine();
                     navigation = MenuCourses(input);
                     break;
@@ -199,6 +203,49 @@ class Program
                     allCourses = AddCourse(idNewCourse, name, allCourses);
                     navigation = "courses";
                     break;
+
+            // AJOUTER UN COURS
+                case "courses_remove":
+                    Console.WriteLine("SUPPRIMER UN COURS");
+                    Console.Write("Identifiant du cours a supprimer : ");
+                    input = Console.ReadLine();
+                    int idCourse;
+                    if(Int32.TryParse(input, out idCourse))
+                    {
+                        int index = GetIndexFromId(allCourses, idCourse);
+                        if(index != -1)
+                        {
+                            course = allCourses[index];
+                            allCourses.Remove(course);
+                            int removals= 0;
+                            foreach(Student eachStudent in allStudents)
+                            {
+                                for(int i = eachStudent.reportCard.Count() - 1; i >= 0; i--)
+                                {
+                                    if(eachStudent.reportCard[i].course == course)
+                                    {
+                                        eachStudent.reportCard.Remove(eachStudent.reportCard[i]);
+                                        removals++;
+                                    }
+                                }
+                            }
+                            Console.WriteLine("");
+                            Console.WriteLine(removals+ " notes supprimees");
+                            Log("Suppression du cours " + course.name + " et de " + removals+ " notes");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Erreur : Identifiant inexistant dans la base de donnees # " + input);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Erreur : Saisie non reconnue");
+                    }
+                    Console.Write("Entree pour revenir au menu :");
+                    Console.ReadLine();
+                    navigation = "courses";
+                    break;
             }
 
             Console.Clear();
@@ -237,6 +284,11 @@ class Program
 
             case "2":
                 return "courses";
+
+            case "3":
+                Log("Sortie du programme par la bonne porte");
+                Environment.Exit(0);
+                return "fini";
 
             default:
                 Console.WriteLine("Erreur : Saisie non reconnue");
