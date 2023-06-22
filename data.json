@@ -1,54 +1,130 @@
 {
-    "students" :
-    [
+    "students": [
         {
-            "id" : 0,
-            "firstName" : "Toto",
-            "lastName" : "First-Student",
-            "dateBirth" : "31/02/1999",
-            "reportCard" :
-            [
-                {
-                    "id" : 0,
-                    "student" : {
-                        "id" : 0,
-                        "firstName" : "Toto",
-                        "lastName" : "First-Student",
-                        "dateBirth" : "31/02/1999"
-                    },
-                    "course" : {
-                        "id" : 0,
-                        "nom" : "maths"
-                    },
-                    "grade" : 13,
-                    "comment" : "De bons efforts de participation"
-                }
-            ]
+            "firstName": "paul",
+            "lastName": "boulanger",
+            "dateBirth": "15/08/1996",
+            "reportCard": [],
+            "id": 0
+        },
+        {
+            "firstName": "jeanne",
+            "lastName": "lemaire",
+            "dateBirth": "01/04/1990",
+            "reportCard": [],
+            "id": 1
         }
     ],
-    "courses" :
-    [
+    "courses": [
         {
-            "id" : 0,
-            "nom" : "maths"
+            "name": "maths",
+            "id": 0
+        },
+        {
+            "name": "histoire",
+            "id": 1
+        },
+        {
+            "name": "mecanique quantique",
+            "id": 2
         }
     ],
-    "grades" :
-    [
+    "grades": [
         {
-            "id" : 0,
-            "student" : {
-                "id" : 0,
-                "firstName" : "Toto",
-                "lastName" : "First-Student",
-                "dateBirth" : "31/02/1999"
+            "student": {
+                "firstName": "paul",
+                "lastName": "boulanger",
+                "dateBirth": "15/08/1996",
+                "reportCard": [],
+                "id": 0
             },
-            "course" : {
-                "id" : 0,
-                "nom" : "maths"
+            "course": {
+                "name": "maths",
+                "id": 0
             },
-            "grade" : 13,
-            "comment" : "De bons efforts de participation"
+            "grade": 17,
+            "comment": "tres bien",
+            "id": 0
+        },
+        {
+            "student": {
+                "firstName": "paul",
+                "lastName": "boulanger",
+                "dateBirth": "15/08/1996",
+                "reportCard": [],
+                "id": 0
+            },
+            "course": {
+                "name": "histoire",
+                "id": 1
+            },
+            "grade": 9,
+            "comment": "mieux lire les enonces",
+            "id": 1
+        },
+        {
+            "student": {
+                "firstName": "paul",
+                "lastName": "boulanger",
+                "dateBirth": "15/08/1996",
+                "reportCard": [],
+                "id": 0
+            },
+            "course": {
+                "name": "mecanique quantique",
+                "id": 2
+            },
+            "grade": 16,
+            "comment": "",
+            "id": 2
+        },
+        {
+            "student": {
+                "firstName": "jeanne",
+                "lastName": "lemaire",
+                "dateBirth": "01/04/1990",
+                "reportCard": [],
+                "id": 1
+            },
+            "course": {
+                "name": "maths",
+                "id": 0
+            },
+            "grade": 19,
+            "comment": "continuez comme ca",
+            "id": 3
+        },
+        {
+            "student": {
+                "firstName": "jeanne",
+                "lastName": "lemaire",
+                "dateBirth": "01/04/1990",
+                "reportCard": [],
+                "id": 1
+            },
+            "course": {
+                "name": "mecanique quantique",
+                "id": 2
+            },
+            "grade": 13,
+            "comment": "encourageant",
+            "id": 4
+        },
+        {
+            "student": {
+                "firstName": "jeanne",
+                "lastName": "lemaire",
+                "dateBirth": "01/04/1990",
+                "reportCard": [],
+                "id": 1
+            },
+            "course": {
+                "name": "histoire",
+                "id": 1
+            },
+            "grade": 18,
+            "comment": "",
+            "id": 5
         }
     ]
 }

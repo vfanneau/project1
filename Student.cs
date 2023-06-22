@@ -1,6 +1,6 @@
 namespace project1;
 
-class Student : DataPrototype
+public class Student : DataPrototype
 {
     public string firstName {get; set;}
     public string lastName {get; set;}

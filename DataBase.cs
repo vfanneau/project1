@@ -1,9 +1,15 @@
-// namespace project1;
+namespace project1;
 
-// new class DataBase
-// {
-//     public List<Student> allStudents {get; set;}
-//     public List<Course> allCourses {get; set;}
-//     public List<Grade> allGrades {get; set;}
+public class Database
+{
+    public List<Student> students {get; set;}
+    public List<Course> courses {get; set;}
+    public List<Grade> grades {get; set;}
 
-// }
+    public Database()
+    {
+        students = new List<Student>();
+        courses = new List<Course>();
+        grades = new List<Grade>();
+    }
+}

@@ -1,23 +1,53 @@
 ﻿namespace project1;
 
+using Newtonsoft.Json;
+
 class Program
 {
     static void Main(string[] args)
     {
+        string filepath = "";
+        Database database;
+        if(args.Length == 0)
+        {
+            filepath = "data.json";
+        }
+        if(!File.Exists(filepath))
+        {
+            var jsonFile = File.CreateText(filepath);
+            jsonFile.Close();
+            database = new Database();
+        }
+        else
+        {
+            database = GetFromJson(filepath);
+        }
+        List<Student> allStudents = new List<Student>();
+        List<Course> allCourses = new List<Course>();
+        List<Grade> allGrades = new List<Grade>();
+        foreach(Student one in database.students)
+        {
+            allStudents.Add(one);
+        }
+        foreach(Course one in database.courses)
+        {
+            allCourses.Add(one);
+        }
+        foreach(Grade one in database.grades)
+        {
+            AddGrade(one.id, new string[] {one.student.id.ToString(), one.course.id.ToString(), one.grade.ToString(), one.comment}, allGrades, allStudents, allCourses);
+        }
+        
         Console.Clear();
         string input;
         Student student;
         Course course;
-        List<Student> allStudents = new List<Student>();
-        List<Course> allCourses = new List<Course>();
-        List<Grade> allGrades = new List<Grade>();
         string navigation = "main";
         string[] logJournal = new string[0];
         var logFile = File.CreateText("log_file.txt");    // CLEAR HISTORY
         logFile.Close();
         
         Console.WriteLine("Bienvenue sur le campus");
-        Console.WriteLine("Version off-line, no initial data, no data storage");
         
         while(true)
         {
@@ -98,6 +128,16 @@ class Program
                     studentInfo = PromptStudentInfo();
                     Log("Ajout d'un nouvel etudiant #" + idStudent + " " + studentInfo[0] + " " + studentInfo[1]);
                     allStudents = AddStudent(idStudent, studentInfo, allStudents);
+                    database.students = allStudents;
+                    foreach(Student one in database.students)
+                    {
+                        one.reportCard = new List<Grade>();
+                    }
+                    GetToJson(filepath, database);
+                    foreach(Grade one in allGrades)
+                    {
+                        allStudents[one.student.id].reportCard.Add(one);
+                    }
                     navigation = "students";
                     break;
 
@@ -161,6 +201,17 @@ class Program
                     course = allCourses[GetIndexFromId(allCourses, Int32.Parse(gradeInfo[1]))];
                     Log("Ajout d'une nouvelle note pour l'etudiant " + student.firstName + " " + student.lastName + " en " + course.name + " : " + gradeInfo[2] + "/20 ; " + gradeInfo[3]);
                     allGrades = AddGrade(idGrade, gradeInfo, allGrades, allStudents, allCourses);
+                    database.grades = allGrades;
+                    database.students = allStudents;
+                    foreach(Student one in database.students)
+                    {
+                        one.reportCard = new List<Grade>();
+                    }
+                    GetToJson(filepath, database);
+                    foreach(Grade one in allGrades)
+                    {
+                        allStudents[one.student.id].reportCard.Add(one);
+                    }
                     navigation = "students";
                     break;
 
@@ -201,6 +252,16 @@ class Program
                     string name = PromptCourseInfo();
                     Log("Ajout d'un nouveau cours #" + idNewCourse + " " + name);
                     allCourses = AddCourse(idNewCourse, name, allCourses);
+                    database.courses = allCourses;
+                    foreach(Student one in database.students)
+                    {
+                        one.reportCard = new List<Grade>();
+                    }
+                    GetToJson(filepath, database);
+                    foreach(Grade one in allGrades)
+                    {
+                        allStudents[one.student.id].reportCard.Add(one);
+                    }
                     navigation = "courses";
                     break;
 
@@ -224,6 +285,7 @@ class Program
                                 {
                                     if(eachStudent.reportCard[i].course == course)
                                     {
+                                        allGrades.Remove(eachStudent.reportCard[i]);
                                         eachStudent.reportCard.Remove(eachStudent.reportCard[i]);
                                         removals++;
                                     }
@@ -232,6 +294,19 @@ class Program
                             Console.WriteLine("");
                             Console.WriteLine(removals+ " notes supprimees");
                             Log("Suppression du cours " + course.name + " et de " + removals+ " notes");
+                            database.grades = allGrades; 
+                            database.courses = allCourses;
+                            database.students = allStudents;
+                            foreach(Student one in database.students)
+                            {
+                                one.reportCard = new List<Grade>();
+                            }
+                            Console.WriteLine(allCourses.Count());
+                            GetToJson(filepath, database);
+                            foreach(Grade one in allGrades)
+                            {
+                                allStudents[one.student.id].reportCard.Add(one);
+                            }
                         }
                         else
                         {
@@ -242,7 +317,6 @@ class Program
                     {
                         Console.WriteLine("Erreur : Saisie non reconnue");
                     }
-                    Console.Write("Entree pour revenir au menu :");
                     Console.ReadLine();
                     navigation = "courses";
                     break;
@@ -567,6 +641,23 @@ class Program
         student.reportCard.Add(newGrade);
         allGrades.Add(newGrade);
         return allGrades;
+    }
+
+            // JSON FUNCTIONS
+
+    static Database GetFromJson(string filepath)
+    {
+        Log("Récupération des donnees du fichier " + filepath);
+        string jsonText = File.ReadAllText(filepath);
+        Database database = JsonConvert.DeserializeObject<Database>(jsonText);
+        return database;
+    }
+
+    static void GetToJson(string filepath, Database database)
+    {
+        Log("Ecriture des donnees du fichier " + filepath);
+        string jsonText = JsonConvert.SerializeObject(database);
+        File.WriteAllText(filepath, jsonText);
     }
 
 }
