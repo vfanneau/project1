@@ -4,7 +4,6 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.Clear();
         string input;
         Student student;
         Course course;
@@ -18,193 +17,323 @@ class Program
         
         Console.WriteLine("Bienvenue sur le campus");
         Console.WriteLine("Version off-line, no initial data, no data storage");
+        Console.WriteLine("Naviguez avec les touches haut, bas, et entrée");
         
+        int cursor = 0;
+        delegate void Del();
+        Menu Retour = new Menu("MENU PRINCIPAL", new Dictionary<string, Del>
+        {
+            {"Eleves", },
+            {"Cours", },
+            {"Fermer", }
+        });
+        Menu Eleves = new Menu("MENU ELEVES", new Dictionary<string, Del>
+        {
+            {"Ajouter", },
+            {"Consulter", },
+            {"Noter", },
+            {"Retour", }
+            });
+        Menu Cours = new Menu("MENU COURS", new Dictionary<string, Del>
+        {
+            {"Ajouter", },
+            {"Supprimer", },
+            {"Retour", }
+        });
+        Menu currentMenu = Retour;
+
         while(true)
         {
-            switch(navigation)
-            {
-            // MENU PRINCIPAL
-                case "main":
-                    Console.WriteLine("MENU PRINCIPAL");
-                    Console.WriteLine("1 --> Eleves");
-                    Console.WriteLine("2 --> Cours");
-                    input = Console.ReadLine();
-                    navigation = MenuMain(input);
-                    break;
-
-            // MENU ELEVES
-                case "students":
-                    Console.WriteLine("MENU ELEVES");
-                    Console.WriteLine("1 --> Liste des eleves");
-                    Console.WriteLine("2 --> Ajouter un eleve");
-                    Console.WriteLine("3 --> Acceder aux informations d'un eleve");
-                    Console.WriteLine("4 --> Ajouter une note a un eleve");
-                    Console.WriteLine("5 --> Retour au menu principal");
-                    input = Console.ReadLine();
-                    navigation = MenuStudents(input);
-                    break;
-
-            // MENU COURS
-                case "courses":
-                    Console.WriteLine("MENU COURS");
-                    Console.WriteLine("1 --> Liste des cours");
-                    Console.WriteLine("2 --> Ajouter un cours au programme");
-                    Console.WriteLine("3 --> Supprimer un cours du programme");
-                    Console.WriteLine("4 --> Retour au menu principal");
-                    input = Console.ReadLine();
-                    navigation = MenuCourses(input);
-                    break;
-
-            // LISTE DES ETUDIANTS
-                case "students_list":
-                    Console.WriteLine("LISTE DES ETUDIANTS");
-                    Log("Consultation de la liste des etudiants");
-                    
-                    if(allStudents.Count != 0)
-                    {
-                        foreach(Student one in allStudents)
-                        {
-                            one.Display();
-                            Console.WriteLine("");
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Liste vide");
-                        Console.WriteLine("");
-                    }
-                    Console.Write("Entree pour revenir au menu :");
-                    Console.ReadLine();
-                    navigation = "students";
-                    break;
-
-            // AJOUTER UN ETUDIANT
-                case "students_add":
-                    Console.WriteLine("AJOUTER UN ETUDIANT");
-                    string[] studentInfo = new string[4];
-                    int idStudent;
-                    if(allStudents.Count == 0)
-                    {
-                        idStudent = 0;
-                    }
-                    else
-                    {
-                        idStudent = allStudents[allStudents.Count-1].id + 1;    // LAST ID + 1
-                    }
-                    studentInfo = PromptStudentInfo();
-                    Log("Ajout d'un nouvel etudiant #" + idStudent + " " + studentInfo[0] + " " + studentInfo[1]);
-                    allStudents = AddStudent(idStudent, studentInfo, allStudents);
-                    navigation = "students";
-                    break;
-
-            // CONSULTER LE DOSSIER D'UN ELEVE
-                case "students_studentInfo":
-                    Console.WriteLine("CONSULTER LE DOSSIER D'UN ELEVE");
-                    Console.Write("Identifiant de l'étudiant a examiner : ");
-                    input = Console.ReadLine();
-                    if(Int32.TryParse(input, out idStudent))
-                    {
-                        int index = GetIndexFromId(allStudents, idStudent);
-                        if(index != -1)
-                        {
-                            student = allStudents[index];
-                            student.Display();
-                            Console.WriteLine("Date de naissance : " + student.dateBirth);
-                            int sum = 0;
-                            int i = 0;
-                            foreach(Grade grade in student.reportCard)
-                            {
-                                grade.Display();
-                                sum += grade.grade;
-                                i++;
-                            }
-                            if(i > 0)
-                            {
-                                Console.WriteLine("");
-                                Console.WriteLine("Moyenne generale : " + (double)sum / i + "/20");
-                            }
-                            Log("Consultation du profil étudiant #" + idStudent);
-                        }
-                        else
-                        {
-                            Console.WriteLine("Erreur : Identifiant inexistant dans la base de donnees # " + input);
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Erreur : Saisie non reconnue");
-                    }
-                    Console.Write("Entree pour revenir au menu :");
-                    Console.ReadLine();
-                    navigation = "students";
-                    break;
-
-            // AJOUTER UNE NOTE A UN ETUDIANT
-                case "students_grade":
-                    Console.WriteLine("AJOUTER UNE NOTE A ETUDIANT");
-                    string[] gradeInfo = new string[4];
-                    int idGrade;
-                    if(allGrades.Count == 0)
-                    {
-                        idGrade = 0;
-                    }
-                    else
-                    {
-                        idGrade = allGrades[allGrades.Count-1].id + 1;    // LAST ID + 1
-                    }
-                    gradeInfo = PromptGradeInfo(allStudents, allCourses);
-                    student = allStudents[GetIndexFromId(allStudents, Int32.Parse(gradeInfo[0]))];
-                    course = allCourses[GetIndexFromId(allCourses, Int32.Parse(gradeInfo[1]))];
-                    Log("Ajout d'une nouvelle note pour l'etudiant " + student.firstName + " " + student.lastName + " en " + course.name + " : " + gradeInfo[2] + "/20 ; " + gradeInfo[3]);
-                    allGrades = AddGrade(idGrade, gradeInfo, allGrades, allStudents, allCourses);
-                    navigation = "students";
-                    break;
-
-            // LISTE DES COURS
-                case "courses_list":
-                    Console.WriteLine("LISTE DES COURS");
-                    Log("Consultation de la liste des cours");
-                    
-                    if(allCourses.Count != 0)
-                    {
-                        foreach(Course one in allCourses)
-                        {
-                            one.Display();
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Liste vide");
-                        Console.WriteLine("");
-                    }
-                    Console.Write("Entree pour revenir au menu :");
-                    Console.ReadLine();
-                    navigation = "courses";
-                    break;
-
-            // AJOUTER UN COURS
-                case "courses_add":
-                    Console.WriteLine("AJOUTER UN COURS");
-                    int idNewCourse;
-                    if(allCourses.Count == 0)
-                    {
-                        idNewCourse = 0;
-                    }
-                    else
-                    {
-                        idNewCourse = allCourses[allCourses.Count-1].id + 1;    // LAST ID + 1
-                    }
-                    string name = PromptCourseInfo();
-                    Log("Ajout d'un nouveau cours #" + idNewCourse + " " + name);
-                    allCourses = AddCourse(idNewCourse, name, allCourses);
-                    navigation = "courses";
-                    break;
-            }
-
             Console.Clear();
+            DisplayMenu(currentMenu, cursor);
+            int userChoice = PromptUserKeypress();
+            bool decrement = userChoice == -1 && cursor > 0;
+            bool increment = userChoice == 1 && cursor < currentMenu.choices.Count() - 1;
+            if(userChoice == 0)
+            {
+                cursor = 0;
+                string choice = currentMenu.choices[cursor];
+                Console.WriteLine(choice);
+                if(choice ==  "Eleves")
+                {
+                    currentMenu = Eleves;
+                }
+                else if(choice ==  "Cours")
+                {
+                    currentMenu = Cours;
+                }
+                else if(choice ==  "Retour")
+                {
+                    currentMenu = Retour;
+                }
+                else 
+                break;
+            }
+            else if(increment || decrement)
+            {
+                cursor += userChoice;
+            }
+        }
+
+
+        // while(true)
+        // {
+        //     switch(navigation)
+        //     {
+        //     // MENU PRINCIPAL
+        //         case "main":
+        //             Console.WriteLine("MENU PRINCIPAL");
+        //             Console.WriteLine("1 --> Eleves");
+        //             Console.WriteLine("2 --> Cours");
+        //             input = Console.ReadLine();
+        //             navigation = MenuMain(input);
+
+
+        //     // MENU ELEVES
+        //         case "students":
+        //             Console.WriteLine("MENU ELEVES");
+        //             Console.WriteLine("1 --> Liste des eleves");
+        //             Console.WriteLine("2 --> Ajouter un eleve");
+        //             Console.WriteLine("3 --> Acceder aux informations d'un eleve");
+        //             Console.WriteLine("4 --> Ajouter une note a un eleve");
+        //             Console.WriteLine("5 --> Retour au menu principal");
+        //             input = Console.ReadLine();
+        //             navigation = MenuStudents(input);
+        //             break;
+
+        //     // MENU COURS
+        //         case "courses":
+        //             Console.WriteLine("MENU COURS");
+        //             Console.WriteLine("1 --> Liste des cours");
+        //             Console.WriteLine("2 --> Ajouter un cours au programme");
+        //             Console.WriteLine("3 --> Supprimer un cours du programme");
+        //             Console.WriteLine("4 --> Retour au menu principal");
+        //             input = Console.ReadLine();
+        //             navigation = MenuCourses(input);
+        //             break;
+
+        //     // LISTE DES ETUDIANTS
+        //         case "students_list":
+        //             Console.WriteLine("LISTE DES ETUDIANTS");
+        //             Log("Consultation de la liste des etudiants");
+                    
+        //             if(allStudents.Count != 0)
+        //             {
+        //                 foreach(Student one in allStudents)
+        //                 {
+        //                     one.Display();
+        //                     Console.WriteLine("");
+        //                 }
+        //             }
+        //             else
+        //             {
+        //                 Console.WriteLine("Liste vide");
+        //                 Console.WriteLine("");
+        //             }
+        //             Console.Write("Entree pour revenir au menu :");
+        //             Console.ReadLine();
+        //             navigation = "students";
+        //             break;
+
+        //     // AJOUTER UN ETUDIANT
+        //         case "students_add":
+        //             Console.WriteLine("AJOUTER UN ETUDIANT");
+        //             string[] studentInfo = new string[4];
+        //             int idStudent;
+        //             if(allStudents.Count == 0)
+        //             {
+        //                 idStudent = 0;
+        //             }
+        //             else
+        //             {
+        //                 idStudent = allStudents[allStudents.Count-1].id + 1;    // LAST ID + 1
+        //             }
+        //             studentInfo = PromptStudentInfo();
+        //             Log("Ajout d'un nouvel etudiant #" + idStudent + " " + studentInfo[0] + " " + studentInfo[1]);
+        //             allStudents = AddStudent(idStudent, studentInfo, allStudents);
+        //             navigation = "students";
+        //             break;
+
+        //     // CONSULTER LE DOSSIER D'UN ELEVE
+        //         case "students_studentInfo":
+        //             Console.WriteLine("CONSULTER LE DOSSIER D'UN ELEVE");
+        //             Console.Write("Identifiant de l'étudiant a examiner : ");
+        //             input = Console.ReadLine();
+        //             if(Int32.TryParse(input, out idStudent))
+        //             {
+        //                 int index = GetIndexFromId(allStudents, idStudent);
+        //                 if(index != -1)
+        //                 {
+        //                     student = allStudents[index];
+        //                     student.Display();
+        //                     Console.WriteLine("Date de naissance : " + student.dateBirth);
+        //                     int sum = 0;
+        //                     int i = 0;
+        //                     foreach(Grade grade in student.reportCard)
+        //                     {
+        //                         grade.Display();
+        //                         sum += grade.grade;
+        //                         i++;
+        //                     }
+        //                     if(i > 0)
+        //                     {
+        //                         Console.WriteLine("");
+        //                         Console.WriteLine("Moyenne generale : " + (double)sum / i + "/20");
+        //                     }
+        //                     Log("Consultation du profil étudiant #" + idStudent);
+        //                 }
+        //                 else
+        //                 {
+        //                     Console.WriteLine("Erreur : Identifiant inexistant dans la base de donnees # " + input);
+        //                 }
+        //             }
+        //             else
+        //             {
+        //                 Console.WriteLine("Erreur : Saisie non reconnue");
+        //             }
+        //             Console.Write("Entree pour revenir au menu :");
+        //             Console.ReadLine();
+        //             navigation = "students";
+        //             break;
+
+        //     // AJOUTER UNE NOTE A UN ETUDIANT
+        //         case "students_grade":
+        //             Console.WriteLine("AJOUTER UNE NOTE A ETUDIANT");
+        //             string[] gradeInfo = new string[4];
+        //             int idGrade;
+        //             if(allGrades.Count == 0)
+        //             {
+        //                 idGrade = 0;
+        //             }
+        //             else
+        //             {
+        //                 idGrade = allGrades[allGrades.Count-1].id + 1;    // LAST ID + 1
+        //             }
+        //             gradeInfo = PromptGradeInfo(allStudents, allCourses);
+        //             student = allStudents[GetIndexFromId(allStudents, Int32.Parse(gradeInfo[0]))];
+        //             course = allCourses[GetIndexFromId(allCourses, Int32.Parse(gradeInfo[1]))];
+        //             Log("Ajout d'une nouvelle note pour l'etudiant " + student.firstName + " " + student.lastName + " en " + course.name + " : " + gradeInfo[2] + "/20 ; " + gradeInfo[3]);
+        //             allGrades = AddGrade(idGrade, gradeInfo, allGrades, allStudents, allCourses);
+        //             navigation = "students";
+        //             break;
+
+        //     // LISTE DES COURS
+        //         case "courses_list":
+        //             Console.WriteLine("LISTE DES COURS");
+        //             Log("Consultation de la liste des cours");
+                    
+        //             if(allCourses.Count != 0)
+        //             {
+        //                 foreach(Course one in allCourses)
+        //                 {
+        //                     one.Display();
+        //                 }
+        //             }
+        //             else
+        //             {
+        //                 Console.WriteLine("Liste vide");
+        //                 Console.WriteLine("");
+        //             }
+        //             Console.Write("Entree pour revenir au menu :");
+        //             Console.ReadLine();
+        //             navigation = "courses";
+        //             break;
+
+        //     // AJOUTER UN COURS
+        //         case "courses_add":
+        //             Console.WriteLine("AJOUTER UN COURS");
+        //             int idNewCourse;
+        //             if(allCourses.Count == 0)
+        //             {
+        //                 idNewCourse = 0;
+        //             }
+        //             else
+        //             {
+        //                 idNewCourse = allCourses[allCourses.Count-1].id + 1;    // LAST ID + 1
+        //             }
+        //             string name = PromptCourseInfo();
+        //             Log("Ajout d'un nouveau cours #" + idNewCourse + " " + name);
+        //             allCourses = AddCourse(idNewCourse, name, allCourses);
+        //             navigation = "courses";
+        //             break;
+
+        //     // SUPPRIMER UN COURS
+        //         case "courses_remove":
+        //             Console.WriteLine("SUPPRIMER UN COURS");
+        //             Console.Write("Identifiant du cours a supprimer : ");
+        //             input = Console.ReadLine();
+        //             int idTargetCourse;
+        //             if(Int32.TryParse(input, out idTargetCourse))
+        //             {
+        //                 int index = GetIndexFromId(allCourses, idTargetCourse);
+        //                 if(index != -1)
+        //                 {
+        //                     course = allCourses[index];
+        //                     allCourses = RemoveCourse(course, allCourses, allStudents);
+        //                     Log("Suppression du cours #" + course.id + " " + course.name);
+        //                 }
+        //                 else
+        //                 {
+        //                     Console.WriteLine("Erreur : Identifiant inexistant dans la base de donnees # " + input);
+        //                 }
+        //             }
+        //             else
+        //             {
+        //                 Console.WriteLine("Erreur : Saisie non reconnue");
+        //             }
+        //             Console.Write("Entree pour revenir au menu :");
+        //             Console.ReadLine();
+        //             navigation = "courses";
+        //             break;
+        //     }
+
+        //     Console.Clear();
+        // }
+    }
+
+
+    static void DisplayMenu(Menu menu, int cursor)
+    {
+        int line = 0;
+        Console.WriteLine("");
+        Console.WriteLine(menu.title);
+        Console.WriteLine("cursor : " + cursor);
+        
+        foreach(string choice in menu.choices)
+        {
+            Console.WriteLine("line : " + line);
+            if(line == cursor)
+            {
+                Console.WriteLine("-->  " + choice);
+            }
+            else
+            {
+                Console.WriteLine("     " + choice);
+            }
+            line++;
         }
     }
 
+    static int PromptUserKeypress()
+    {
+        ConsoleKey inputKey = ConsoleKey.E;
+        while (inputKey != ConsoleKey.Enter && inputKey != ConsoleKey.UpArrow && inputKey != ConsoleKey.DownArrow)
+        {
+            inputKey = Console.ReadKey().Key;
+        }
+        if(inputKey == ConsoleKey.Enter)
+        {
+            return 0;
+        }
+        else if(inputKey == ConsoleKey.DownArrow)
+        {
+            return 1;
+        }
+        else
+        {
+            return -1;
+        }
+    }
 
     static void Log(string message)
     {
@@ -400,7 +529,7 @@ class Program
         return allStudents;
     }
 
-            // STUDENT FUNCTIONS
+            // COURSE FUNCTIONS
 
     static string PromptCourseInfo()
     {
@@ -423,6 +552,24 @@ class Program
     {
         Course newGuy = new Course(id, name);
         allCourses.Add(newGuy);
+        return allCourses;
+    }
+
+    static List<Course> RemoveCourse(Course targetCourse, List<Course> allCourses, List<Student> allStudents)
+    {
+        allCourses.Remove(targetCourse);
+        int deletions = 0;
+        foreach(Student student in allStudents)
+        {
+            foreach(Grade grade in student.reportCard)  //  Collection was modified; enumeration operation may not execute
+            {
+                if(targetCourse == grade.course){
+                    student.reportCard.Remove(grade);
+                    deletions++;
+                }
+            }
+        }
+        Console.WriteLine(deletions + " notes supprimées");
         return allCourses;
     }
 
